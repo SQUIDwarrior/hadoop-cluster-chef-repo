@@ -21,6 +21,12 @@ case node[:platform]
       mode "0644"
       source "cloudera-cdh3.list"
     end
+    cookbook_file "/etc/apt/trusted.gpg.d/cloudera-gpg.key" do
+      owner "root"
+      group "root"
+      mode "0644"
+      source "cloudera-gpg.key"
+    end
   when "redhat","centos","fedora","scientific"
     cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
       owner "root"
