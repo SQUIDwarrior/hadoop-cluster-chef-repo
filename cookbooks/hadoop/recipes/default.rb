@@ -17,11 +17,11 @@ case node[:platform]
   when "ubuntu","debian"
     apt_repository "cloudera-cdh3" do
       uri "http://archive.cloudera.com/debian"
-      distribution "maverick"
-      components ["hadoop-0.2", "contrib"]
-      key "http://archive.cloudera.com/debian/archive.key"
+      components ["maverick-cdh3", "contrib"]
+      #key "http://archive.cloudera.com/debian/archive.key"
+      deb_src "true"
       action :add
-      notifies :run, "execute[apt-get update]", :immediately
+      #notifies :run, "execute[apt-get update]", :immediately
     end
   when "redhat","centos","fedora","scientific"
     cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
@@ -35,7 +35,7 @@ case node[:platform]
 # Install the hadoop core package.  All other recipes rely on this.
 package "hadoop-0.20" do
   action :install
-  version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 # The only services we ever want to automatically restart upon a config change
