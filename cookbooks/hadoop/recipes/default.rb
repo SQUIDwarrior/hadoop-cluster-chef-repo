@@ -35,17 +35,8 @@ case node[:platform]
 # Install the hadoop core package.  All other recipes rely on this.
 package "hadoop-0.20" do
   action :install
+  version node[:Hadoop][:Version]
   options "--force-yes"
-end
-
-# The only services we ever want to automatically restart upon a config change
-# are these two so we define them up here.
-service "hadoop-0.20-datanode" do
-  supports :status => true, :start => true, :stop => true, :restart => true
-end
-
-service "hadoop-0.20-tasktracker" do
-  supports :status => true, :start => true, :stop => true, :restart => true
 end
 
 

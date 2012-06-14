@@ -15,6 +15,7 @@
 package "hadoop-0.20-jobtracker" do
   action :install
   version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 template "/etc/hadoop/conf/fair-scheduler.xml" do

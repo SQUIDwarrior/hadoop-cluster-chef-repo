@@ -23,6 +23,7 @@ end
 package "hadoop-0.20-secondarynamenode" do
   action :install
   version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 if File.exist?("/data/a")

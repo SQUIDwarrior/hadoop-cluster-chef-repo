@@ -16,11 +16,13 @@
 package "hadoop-0.20-datanode" do
   action :install
   version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 package "hadoop-0.20-tasktracker" do
   action :install
   version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 cookbook_file "/tmp/buildHadoopDisks.sh" do

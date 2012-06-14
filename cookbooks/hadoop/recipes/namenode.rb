@@ -15,6 +15,7 @@
 package "hadoop-0.20-namenode" do
   action :install
   version node[:Hadoop][:Version]
+  options "--force-yes"
 end
 
 template "/etc/hadoop/conf/dfs.hosts.exclude" do
