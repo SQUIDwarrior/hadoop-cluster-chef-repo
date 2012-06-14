@@ -15,17 +15,13 @@
 # Install the Cloudera repository.
 case node[:platform]
   when "ubuntu","debian"
-    cookbook_file "/etc/apt/sources.list.d/cloudera-cdh3.list" do
-      owner "root"
-      group "root"
-      mode "0644"
-      source "cloudera-cdh3.list"
-    end
-    cookbook_file "/etc/apt/trusted.gpg.d/cloudera-gpg.key" do
-      owner "root"
-      group "root"
-      mode "0644"
-      source "cloudera-gpg.key"
+    apt_repository "cloudera-cdh3" do
+      uri "http://archive.cloudera.com/debian"
+      distribution "maverick"
+      components ["hadoop-0.2", "contrib"]
+      key "http://archive.cloudera.com/debian/archive.key"
+      action :add
+      notifies :run, "execute[apt-get update]", :immediately
     end
   when "redhat","centos","fedora","scientific"
     cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
