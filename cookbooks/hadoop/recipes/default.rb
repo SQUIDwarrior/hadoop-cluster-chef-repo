@@ -18,10 +18,9 @@ case node[:platform]
     apt_repository "cloudera-cdh3" do
       uri "http://archive.cloudera.com/debian"
       components ["maverick-cdh3", "contrib"]
-      #key "http://archive.cloudera.com/debian/archive.key"
       deb_src "true"
-      action :add
-      #notifies :run, "execute[apt-get update]", :immediately
+      key "http://archive.cloudera.com/debian/archive.key"
+	  notifies :run, resources(:execute => "apt-get update"), :immediately
     end
   when "redhat","centos","fedora","scientific"
     cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
@@ -37,6 +36,29 @@ package "hadoop-0.20" do
   action :install
   version node[:Hadoop][:Version]
   options "--force-yes"
+end
+
+# Install the slave processes.
+package "hadoop-0.20-datanode" do
+  action :install
+  version node[:Hadoop][:Version]
+  options "--force-yes"
+end
+
+package "hadoop-0.20-tasktracker" do
+  action :install
+  version node[:Hadoop][:Version]
+  options "--force-yes"
+end
+
+# The only services we ever want to automatically restart upon a config change
+# are these two so we define them up here.
+service "hadoop-0.20-datanode" do
+  supports :status => true, :start => true, :stop => true, :restart => true
+end
+
+service "hadoop-0.20-tasktracker" do
+  supports :status => true, :start => true, :stop => true, :restart => true
 end
 
 

@@ -15,7 +15,7 @@
 # Settings for /etc/hadoop/conf/core-site.xml
 
 default[:Hadoop][:Core][:hadoopTmpDir] = "/var/lib/hadoop-0.20/cache/${user.name}"
-default[:Hadoop][:Core][:fsDefaultName] = "hdfs://namenode.example.com:8020"
+default[:Hadoop][:Core][:fsDefaultName] = "hdfs://chef-server:8020"
 default[:Hadoop][:Core][:ioFileBufferSize] = "65536"
 default[:Hadoop][:Core][:ioCompressionCodecs] = "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec"
 default[:Hadoop][:Core][:hadoopProxyuserOozieHosts] = "oozie.example.com"

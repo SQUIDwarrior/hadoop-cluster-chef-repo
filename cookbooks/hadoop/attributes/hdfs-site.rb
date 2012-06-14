@@ -14,7 +14,7 @@
 
 # Settings for /etc/hadoop/conf/hdfs-site.xml
 default[:Hadoop][:HDFS][:dfsNameDir] = [ "/data/a/dfs/name", "/data/b/dfs/name" ]
-default[:Hadoop][:HDFS][:dfsSecondaryHttpAddress] = "10.0.0.254:50090"
+default[:Hadoop][:HDFS][:dfsSecondaryHttpAddress] = "chef-server:50090"
 default[:Hadoop][:HDFS][:dfsDatanodeMaxXcievers] = "4096"
 default[:Hadoop][:HDFS][:dfsDatanodeDuReserved] = "1073741824"
 default[:Hadoop][:HDFS][:dfsDatanodeHandlerCount] = "4"

@@ -18,6 +18,6 @@ default[:Hadoop][:Env][:HADOOP_HEAPSIZE] = 6144
 default[:Hadoop][:Env][:HADOOP_NAMENODE_OPTS] = ""
 default[:Hadoop][:Env][:HADOOP_SECONDARYNAMENODE_OPTS] = ""
 default[:Hadoop][:Env][:HADOOP_DATANODE_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_JOBTRACKER_OPTS] = "-"
+default[:Hadoop][:Env][:HADOOP_JOBTRACKER_OPTS] = ""
 default[:Hadoop][:Env][:HADOOP_TASKTRACKER_OPTS] = ""
 default[:Hadoop][:Env][:HADOOP_LOG_DIR] = "/var/lib/hadoop-0.20/logs"
