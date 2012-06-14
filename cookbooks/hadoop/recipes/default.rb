@@ -12,13 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install the Cloudera yum repository.
-cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
-  owner "root"
-  group "root"
-  mode "0644"
-  source "cloudera-cdh3.repo"
-end
+# Install the Cloudera repository.
+case node[:platform]
+  when "ubuntu","debian"
+    cookbook_file "/etc/apt/sources.list.d/cloudera-cdh3.list" do
+      owner "root"
+      group "root"
+      mode "0644"
+      source "cloudera-cdh3.list"
+    end
+  when "redhat","centos","fedora","scientific"
+    cookbook_file "/etc/yum.repos.d/cloudera-cdh3.repo" do
+      owner "root"
+      group "root"
+      mode "0644"
+      source "cloudera-cdh3.repo"
+    end
+  end
 
 # Install the hadoop core package.  All other recipes rely on this.
 package "hadoop-0.20" do
