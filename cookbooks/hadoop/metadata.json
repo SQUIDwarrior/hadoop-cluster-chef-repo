@@ -1,0 +1,37 @@
+{
+  "description": "Installs/Configures ob-hadoop-test",
+  "recipes": {
+    "hadoop::hive-thrift": "Installs the init ifrasructure to run a hive-thrift server insance.",
+    "hadoop::slave": "Installs the DataNode and TaskTracker packages and prepares the file system.",
+    "hadoop::secondarynamenode": "Installs the SecondaryNameNode package and prepares the file system.",
+    "hadoop::default": "Installs hadoop base libraries and conguration.",
+    "hadoop::namenode": "Installs the NameNode package and prepares the file system.",
+    "hadoop::hivemetastore": "Installs mysql-instance prepped to become a hive metastore.",
+    "hadoop::hive": "Installs the Hive CLI and configuration.",
+    "hadoop::jobtracker": "Installs the JobTracker package and prepares the file system."
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "version": "0.1.1",
+  "long_description": "= DESCRIPTION:\n\n= REQUIREMENTS:\n\n= ATTRIBUTES:\n\n= USAGE:\n\n",
+  "name": "ob-hadoop-test",
+  "providing": {
+  },
+  "attributes": {
+  },
+  "maintainer": "Outbrain, Inc.",
+  "replacing": {
+  },
+  "license": "All rights reserved",
+  "maintainer_email": "nathan@outbrain.com",
+  "groupings": {
+  },
+  "dependencies": {
+  },
+  "platforms": {
+  },
+  "recommendations": {
+  }
+}
