@@ -12,4 +12,4 @@ recipe           "hadoop::jobtracker", "Installs the JobTracker package and prep
 recipe           "hadoop::namenode", "Installs the NameNode package and prepares the file system."
 recipe           "hadoop::secondarynamenode", "Installs the SecondaryNameNode package and prepares the file system."
 recipe           "hadoop::slave", "Installs the DataNode and TaskTracker packages and prepares the file system."
-depends          "apt"
+depends          "apt,java"
