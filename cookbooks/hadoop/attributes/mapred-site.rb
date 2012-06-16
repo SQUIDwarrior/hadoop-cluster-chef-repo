@@ -14,7 +14,7 @@
 
 # Settings for /etc/hadoop/conf/mapred-site.xml
 
-default[:Hadoop][:Mapred][:mapredJobTracker] = "chef-server:8021"
+default[:Hadoop][:Mapred][:mapredJobTracker] = "hadoop-master:8021"
 default[:Hadoop][:Mapred][:mapredSystemDir] = "/mapred/system"
 default[:Hadoop][:Mapred][:mapredTasktrackerMapTasksMaximum] = "7"
 default[:Hadoop][:Mapred][:mapredTasktrackerReduceTasksMaximum] = "3"

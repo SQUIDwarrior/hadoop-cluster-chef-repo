@@ -25,19 +25,6 @@ template "/etc/hadoop/conf/dfs.hosts.exclude" do
   source "dfs.hosts.exclude.erb"
 end
 
-cookbook_file "/tmp/buildHadoopDisks.sh" do
-  source "buildHadoopDisks.sh"
-  owner "root"
-  group "root"
-  backup false
-  mode "0755"
-end
-
-execute "buildHadoopDisks" do
-  command "/tmp/buildHadoopDisks.sh"
-  action :run
-end
-
 if File.exist?("/data/f")
    node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name", "/data/c/dfs/name", "/data/d/dfs/name", "/data/e/dfs/name", "/data/f/dfs/name" ]
 elsif File.exist?("/data/e")

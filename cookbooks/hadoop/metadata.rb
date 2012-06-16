@@ -14,3 +14,4 @@ recipe           "hadoop::secondarynamenode", "Installs the SecondaryNameNode pa
 recipe           "hadoop::slave", "Installs the DataNode and TaskTracker packages and prepares the file system."
 depends          "apt"
 depends		 "java"
+depends		 "ntp"

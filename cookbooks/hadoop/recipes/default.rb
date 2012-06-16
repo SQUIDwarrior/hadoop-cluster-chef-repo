@@ -51,6 +51,19 @@ package "hadoop-0.20-tasktracker" do
   options "--force-yes"
 end
 
+cookbook_file "/tmp/buildHadoopDisks.sh" do
+  source "buildHadoopDisks.sh"
+  owner "root"
+  group "root"
+  backup false
+  mode "0755"
+end
+
+execute "buildHadoopDisks" do
+  command "/tmp/buildHadoopDisks.sh"
+  action :run
+end
+
 # The only services we ever want to automatically restart upon a config change
 # are these two so we define them up here.
 service "hadoop-0.20-datanode" do
