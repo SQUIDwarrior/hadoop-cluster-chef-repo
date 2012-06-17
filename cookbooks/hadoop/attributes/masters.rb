@@ -12,13 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Settings for /etc/hadoop/conf/hadoop-env.sh
+# Non config file stuff should go here.
 
-default[:Hadoop][:Env][:HADOOP_HEAPSIZE] = 6144
-default[:Hadoop][:Env][:HADOOP_NAMENODE_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_SECONDARYNAMENODE_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_DATANODE_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_JOBTRACKER_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_TASKTRACKER_OPTS] = ""
-default[:Hadoop][:Env][:HADOOP_LOG_DIR] = "/var/lib/hadoop-0.20/logs"
-default[:Hadoop][:Env][:JAVA_HOME] = "/usr/lib/jvm/java-6-openjdk-amd64/jre"
+# Set the master nodes
+default[:Hadoop][:Master] = "hadoop-master"

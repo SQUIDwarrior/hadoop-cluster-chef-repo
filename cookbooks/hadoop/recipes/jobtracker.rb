@@ -39,16 +39,8 @@ execute "buildHadoopDisks" do
 end
 
 # Please look away.  I can't believe I published this :/
-if File.exist?("/data/f")
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local", "/data/e/mapred/local", "/data/f/mapred/local" ]
-elsif File.exist?("/data/e")
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local", "/data/e/mapred/local" ]
-elsif File.exist?("/data/d")
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local" ]
-elsif File.exist?("/data/c")
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local" ]
-elsif File.exist?("/data/b")
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local" ]
+if File.exist?("/data/b")
+   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/b/mapred/local" ]
 elsif File.exist?("/data/a")
    node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local" ]
 else

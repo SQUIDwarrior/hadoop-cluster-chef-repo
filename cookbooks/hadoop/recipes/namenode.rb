@@ -25,16 +25,8 @@ template "/etc/hadoop/conf/dfs.hosts.exclude" do
   source "dfs.hosts.exclude.erb"
 end
 
-if File.exist?("/data/f")
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name", "/data/c/dfs/name", "/data/d/dfs/name", "/data/e/dfs/name", "/data/f/dfs/name" ]
-elsif File.exist?("/data/e")
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name", "/data/c/dfs/name", "/data/d/dfs/name", "/data/e/dfs/name" ]
-elsif File.exist?("/data/d")
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name", "/data/c/dfs/name", "/data/d/dfs/name" ]
-elsif File.exist?("/data/c")
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name", "/data/c/dfs/name" ]
-elsif File.exist?("/data/b")
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name", "/data/b/dfs/name" ]
+if File.exist?("/data/b")
+   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/b/dfs/name" ]
 elsif File.exist?("/data/a")
    node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name" ]
 else
@@ -47,12 +39,27 @@ end
 # directory BELOW dfs.name.dir has the proper permissions as the above command
 # like to create it itself.
 node[:Hadoop][:HDFS][:dfsNameDir].each do |nameDir|
-  directory nameDir[0..11] do
+  directory nameDir do
     owner "hdfs"
     group "hadoop"
     mode "0755"
     recursive false
     action :create
+  end
+end
+
+if !File.exist?("/etc/hadoop/conf/formated")  
+  execute "formatHDFS" do
+    command "hadoop namenode -format -force"
+    user "hdfs"
+    action :run
+  end
+  
+  file "/etc/hadoop/conf/formated" do
+    owner "hdfs"
+    group "hadoop"
+    mode "0755"
+    action :create_if_missing
   end
 end
 

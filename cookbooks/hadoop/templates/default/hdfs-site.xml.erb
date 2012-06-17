@@ -7,7 +7,7 @@
 
   <property>
     <name>dfs.name.dir</name>
-    <value><%= @node[:Hadoop][:HDFS][:dfsNameDir].join(",") %></value>
+    <value><%= @node[:Hadoop][:HDFS][:dfsNameDir] %></value>
     <final>true</final>
   </property>
 
@@ -25,7 +25,7 @@
 
   <property>
     <name>dfs.data.dir</name>
-    <value><%= @node[:Hadoop][:HDFS][:dfsDataDir].join(",") %></value>
+    <value><%= @node[:Hadoop][:HDFS][:dfsDataDir] %></value>
     <final>true</final>
   </property>
 

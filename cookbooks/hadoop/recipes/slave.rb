@@ -39,21 +39,9 @@ execute "buildHadoopDisks" do
 end
 
 # Oh, please god no!  I'll make this more elegent later...
-if File.exist?("/data/f")
-   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data", "/data/b/dfs/data", "/data/c/dfs/data", "/data/d/dfs/data", "/data/e/dfs/data", "/data/f/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local", "/data/e/mapred/local", "/data/f/mapred/local" ]
-elsif File.exist?("/data/e")
-   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data", "/data/b/dfs/data", "/data/c/dfs/data", "/data/d/dfs/data", "/data/e/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local", "/data/e/mapred/local" ]
-elsif File.exist?("/data/d")
-   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data", "/data/b/dfs/data", "/data/c/dfs/data", "/data/d/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local", "/data/d/mapred/local" ]
-elsif File.exist?("/data/c")
-   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data", "/data/b/dfs/data", "/data/c/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local", "/data/c/mapred/local" ]
-elsif File.exist?("/data/b")
-   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data", "/data/b/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local", "/data/b/mapred/local" ]
+if File.exist?("/data/b")
+   node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/b/dfs/data" ]
+   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/b/mapred/local" ]
 elsif File.exist?("/data/a")
    node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data" ]
    node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local" ]
@@ -80,6 +68,16 @@ node[:Hadoop][:Mapred][:mapredLocalDir].each do |localDir|
     recursive true
     action :create
   end
+end
+
+#Set the masters file
+template "/etc/hadoop/conf/masters" do
+  owner "root"
+  group "hadoop"
+  mode "0644"
+  source "masters.erb"
+  notifies :restart, resources(:service => "hadoop-0.20-datanode")
+  notifies :restart, resources(:service => "hadoop-0.20-tasktracker")
 end
 
 service "hadoop-0.20-datanode" do

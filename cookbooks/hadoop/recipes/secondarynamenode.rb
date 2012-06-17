@@ -26,17 +26,23 @@ package "hadoop-0.20-secondarynamenode" do
   options "--force-yes"
 end
 
-if File.exist?("/data/a")
+if File.exist?("/data/b")
+   node.node[:Hadoop][:HDFS][:fsCheckpointDir] = "/data/b/dfs/namesecondary"
+elsif File.exist?("/data/a")
    node.node[:Hadoop][:HDFS][:fsCheckpointDir] = "/data/a/dfs/namesecondary"
-   node[:Hadoop][:HDFS][:fsCheckpointDir].each do |checkpointDir|
-     directory checkpointDir do
+else
+   node.node[:Hadoop][:HDFS][:fsCheckpointDir] = "/data/a/dfs/namesecondary"
+
+end
+
+node[:Hadoop][:HDFS][:fsCheckpointDir].each do |checkpointDir|	
+	directory checkpointDir do
        owner "hdfs"
        group "hadoop"
        mode "0755"
        recursive true
        action :create
-  end
-end
+	end
 end
 
 service "hadoop-0.20-secondarynamenode" do

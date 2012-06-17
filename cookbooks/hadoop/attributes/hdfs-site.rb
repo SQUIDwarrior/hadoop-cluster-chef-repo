@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Settings for /etc/hadoop/conf/hdfs-site.xml
-default[:Hadoop][:HDFS][:dfsNameDir] = [ "/data/a/dfs/name", "/data/b/dfs/name" ]
+default[:Hadoop][:HDFS][:dfsNameDir] = "/data/b/dfs/name"
 default[:Hadoop][:HDFS][:dfsSecondaryHttpAddress] = "hadoop-master:50090"
 default[:Hadoop][:HDFS][:dfsDatanodeMaxXcievers] = "4096"
 default[:Hadoop][:HDFS][:dfsDatanodeDuReserved] = "1073741824"

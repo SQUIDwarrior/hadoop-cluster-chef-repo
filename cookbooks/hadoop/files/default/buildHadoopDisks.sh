@@ -36,7 +36,7 @@
 # dfs.data.dir for you then restart the datanode to pick up the change.
 
 declare -a disks
-disks=( $(fdisk -l | grep Disk | cut -d":" -f1 | sed 's/Disk //g') )
+disks=( $(fdisk -l | grep "Disk /dev/sd" | cut -d":" -f1 | sed 's/Disk //g') )
 
 function addToFstab() {
    echo "LABEL=/data/${disk:7}           /data/${disk:7}                 ext3    defaults        1 2" >> /etc/fstab
@@ -55,7 +55,7 @@ function formatVolume() {
 }
 
 function mountVolume() {
-   mount /data/${disk:7} 
+   mount /data/${disk:7}
 }
 
 for disk in "${disks[@]}"; do
@@ -64,6 +64,7 @@ for disk in "${disks[@]}"; do
    elif [ -d /data/${disk:7} ]; then
       echo "skipping $disk"
    else
+      echo "Using disk $disk"
       buildMountPoint
       buildPartition
       formatVolume

@@ -38,19 +38,19 @@ package "hadoop-0.20" do
   options "--force-yes"
 end
 
-# Install the slave processes.
+# Install the slave processes on every node
 package "hadoop-0.20-datanode" do
   action :install
   version node[:Hadoop][:Version]
   options "--force-yes"
 end
-
 package "hadoop-0.20-tasktracker" do
   action :install
   version node[:Hadoop][:Version]
   options "--force-yes"
 end
 
+# Ensure the hadoop disks have been built
 cookbook_file "/tmp/buildHadoopDisks.sh" do
   source "buildHadoopDisks.sh"
   owner "root"
@@ -58,18 +58,17 @@ cookbook_file "/tmp/buildHadoopDisks.sh" do
   backup false
   mode "0755"
 end
-
 execute "buildHadoopDisks" do
   command "/tmp/buildHadoopDisks.sh"
   action :run
 end
+
 
 # The only services we ever want to automatically restart upon a config change
 # are these two so we define them up here.
 service "hadoop-0.20-datanode" do
   supports :status => true, :start => true, :stop => true, :restart => true
 end
-
 service "hadoop-0.20-tasktracker" do
   supports :status => true, :start => true, :stop => true, :restart => true
 end
