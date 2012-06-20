@@ -12,7 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Non config file stuff should go here.
-
-# Pin the Hive version to install.
-default[:Hive][:Version] = "0.7.0+11-2"
+# Set the slave nodes
+default[:Hadoop][:Slaves] = "hadoop-master", "hadoop-slave1", "hadoop-slave2"

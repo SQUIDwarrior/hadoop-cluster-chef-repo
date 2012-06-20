@@ -65,7 +65,7 @@ end
 
 
 # The only services we ever want to automatically restart upon a config change
-# are these two so we define them up here.
+# are these two so we define them up here, but don't start them.
 service "hadoop-0.20-datanode" do
   supports :status => true, :start => true, :stop => true, :restart => true
 end

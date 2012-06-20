@@ -38,7 +38,7 @@ execute "buildHadoopDisks" do
   action :run
 end
 
-# Oh, please god no!  I'll make this more elegent later...
+# For now just assume a simple 2-disk configuration
 if File.exist?("/data/b")
    node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/b/dfs/data" ]
    node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/b/mapred/local" ]
@@ -70,16 +70,7 @@ node[:Hadoop][:Mapred][:mapredLocalDir].each do |localDir|
   end
 end
 
-#Set the masters file
-template "/etc/hadoop/conf/masters" do
-  owner "root"
-  group "hadoop"
-  mode "0644"
-  source "masters.erb"
-  notifies :restart, resources(:service => "hadoop-0.20-datanode")
-  notifies :restart, resources(:service => "hadoop-0.20-tasktracker")
-end
-
+# Create and start the slave services.
 service "hadoop-0.20-datanode" do
   action [ :enable, :start ]
   running true
@@ -90,4 +81,14 @@ service "hadoop-0.20-tasktracker" do
   action [ :enable, :start ]
   running true
   supports :status => true, :start => true, :stop => true, :restart => true
+end
+
+#Set the masters file and restart the services if needed
+template "/etc/hadoop/conf/masters" do
+  owner "root"
+  group "hadoop"
+  mode "0644"
+  source "masters.erb"
+  notifies :restart, resources(:service => "hadoop-0.20-datanode")
+  notifies :restart, resources(:service => "hadoop-0.20-tasktracker")
 end

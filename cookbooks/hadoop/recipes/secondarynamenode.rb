@@ -26,6 +26,7 @@ package "hadoop-0.20-secondarynamenode" do
   options "--force-yes"
 end
 
+# For now just assume a simple 2-disk configuration
 if File.exist?("/data/b")
    node.node[:Hadoop][:HDFS][:fsCheckpointDir] = "/data/b/dfs/namesecondary"
 elsif File.exist?("/data/a")
