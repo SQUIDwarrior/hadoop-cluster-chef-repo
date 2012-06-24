@@ -52,3 +52,16 @@ create-hadoop-slave.sh:	This will create new Hadoop slave node. It will need to 
 						modified by hand if different VM templates are desired, or if you
 						don't want to cloe a template at all. Requires a configured Chef
 						workstation and server.
+						
+						
+Acknowledgements
+================
+This project uses several third-party Chef cookbooks:
+
+apt 		http://community.opscode.com/cookbooks/apt
+ruby 		http://community.opscode.com/cookbooks/ruby
+java 		http://community.opscode.com/cookbooks/java
+ntp			http://community.opscode.com/cookbooks/ntp
+chef-client http://community.opscode.com/cookbooks/chef-client
+hadoop		https://github.com/nmilford/cookbooks/tree/master/hadoop
+																	

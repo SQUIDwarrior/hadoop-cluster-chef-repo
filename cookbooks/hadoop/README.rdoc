@@ -1,100 +1,67 @@
-Hadoop Cookbook
-===============
+Overview
+========
 
-Builds a working Hadoop cluster from bare metal.
+This Chef repository is designed to dynamically create and deploy a Hadoop cluster using 
+virtual machines. The basic install script [script name] is used to create the cluster 
+with a pre-set number of initial nodes.
 
-This is my first Chef recipe and on top of that it is a first pass.  
+Prerequisites
+=============
+You must have a DHCP and DNS server running so that the nodes can find each other. 
+You must also be running VMWare workstation (or vCenter) in order to use the setup scripts
+to automatically clone the nodes.
 
-I hope it is helpful and please improve where you see fit.
+You must also have a configured Chef workstation that you can set up to communicate with 
+the Chef server.
 
-I tried to put all of the config file knobs I adjust on the cluster in the attributes so I could change them per node.
+Environment
+===========
+This uses a pre-built VMs running Ubuntu 12.04, 64-bit. The hadoop-master VM is also the
+Chef server. As this is designed to be a stand-alone proof-of-concept, it is not designed
+to be deployed into an existing Chef environment out of the box. This can be done by 
+editing the server_url attribute in roles/base.js and updating the chef-client 
+configuration within the hadoop-slave VM template before cloning the VM.
 
-I have some really ugly code to build disks and enumerate target directories for `dfs.name.dir`, `dfs.data.dir` and `mapred.local.dir`.
+This can also be deployed to already existing Ubuntu nodes by simply applying the 
+base and hadoop-slave roles to the node, and editing and updating the slaves.rb file with
+the list of hadoop slaves.
 
-For how I am building disks, see: `files/default/buildHadoopDisks.sh`
+There is currently no support for other platforms.
 
-Requirements
-============
+Usage (Pre-built VM templates)
+==============================
+First, boot the hadoop-master template and configure your Chef workstation to use this
+as the Chef server. Once this is complete, run the [install tool] utility to deploy the
+Hadoop cluster using the supplied Ubuntu VMWare templates. You will need at least 1 slave
+node in order to use Hadoop as the master node does not run the DataNode or JobTracker
+services.
 
-Built & tested for a CentOS 5.5 environment.  Results may vary elsewhere.
+Usage (Custom)
+==============================
+If you don't want to use the supplied templates, you can use the supplied scripts to build
+your cluster by hand:
 
-This cookbook assumed that java has already been installed. We use our own proprietary cookbook for that. 
-
-Consider adding a line to the `metadata.rb` for this cookbook:
-
-    depends 'java-cookbook'
-
-ATTRIBUTES
-==========
-
-See the attributes directory.  All of the basic settings you might use to tweak your hadoop cluster are avaliable there.
-
-To start you'll want to adjust
-
-* attributes/core-site.rb: default[:Hadoop][:Core][:fsDefaultName]
-
-* attributes/hadoop-env.rb default[:Hadoop][:Env][:HADOOP_HEAPSIZE]
-
-* attributes/hdfs-site.rb default[:Hadoop][:HDFS][:dfsSecondaryHttpAddress]
-
-* attributes/mapred-site.rb default[:Hadoop][:Mapred][:mapredJobTracker]
-
-
-USAGE
-=====
-
-Add the default recipe to any host you only want hadoop libs and config on.
-
-Add any other if you want a node to have a specific function.
-
-TODO
-====
-
-* Find out what chef best practices I am badly breaking and address them.
-
-* Make the config template/attribute setup more modular.
-
-* Thoroughly clean up the mysql metastore recipe.
-
-* Make multiple mysql metastore slaves replicating down stream from the primary
-  to create redundancy.
-
-* Clean up the dfs.name.dir/dfs.data.dir/mapred.local.dir enumeration code.
-
-* Have NameNode automatically mount NFS shares from other nodes and add them 
-  to dfs.name.dir
-
-* Have the NameNode safely format if this is a first time deploy and ignore otherwise.
-
-* Deploy NameNode backup scripts.
-
-* Deploy Hive metastore backup scripts.
-
-* Balancer setup.
-
-* Oozie recipe.
-
-* Pig recipe.
-
-* Hue recipe.
-
-* Add array to populate dfs.hosts.exclude file.
-
-LICENSE & AUTHOR
+install-chef.sh: This will install the Chef binares on the system. It can do both server 
+				 and client installs. Only supported on Debian-based systems. Client 
+				 install requires a configured Chef server first.
+				 
+create-roles-and-nodes.sh:	This will create all the required roles and nodes on the 
+							Chef server. Requires a configured Chef workstation and server
+							
+create-hadoop-slave.sh:	This will create new Hadoop slave node. It will need to be 
+						modified by hand if different VM templates are desired, or if you
+						don't want to cloe a template at all. Requires a configured Chef
+						workstation and server.
+						
+						
+Acknowledgements
 ================
+This project uses several third-party Chef cookbooks:
 
-Author: Nathan Milford <nathan@outbrain.com>
-
-Copyright: &copy; 2011, Outbrain, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-<http://www.apache.org/licenses/LICENSE-2.0>
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+apt 		http://community.opscode.com/cookbooks/apt
+ruby 		http://community.opscode.com/cookbooks/ruby
+java 		http://community.opscode.com/cookbooks/java
+ntp			http://community.opscode.com/cookbooks/ntp
+chef-client http://community.opscode.com/cookbooks/chef-client
+hadoop		https://github.com/nmilford/cookbooks/tree/master/hadoop
+																	

@@ -1,28 +1,14 @@
 Hadoop Cookbook
 ===============
 
-Builds a working Hadoop cluster from bare metal.
+Builds a working Hadoop cluster using Ubuntu VMs.
 
-This is my first Chef recipe and on top of that it is a first pass.  
-
-I hope it is helpful and please improve where you see fit.
-
-I tried to put all of the config file knobs I adjust on the cluster in the attributes so I could change them per node.
-
-I have some really ugly code to build disks and enumerate target directories for `dfs.name.dir`, `dfs.data.dir` and `mapred.local.dir`.
-
-For how I am building disks, see: `files/default/buildHadoopDisks.sh`
+Based on the original cookbook by Nathan Milford: https://github.com/nmilford/cookbooks/tree/master/hadoop
 
 Requirements
 ============
 
-Built & tested for a CentOS 5.5 environment.  Results may vary elsewhere.
-
-This cookbook assumed that java has already been installed. We use our own proprietary cookbook for that. 
-
-Consider adding a line to the `metadata.rb` for this cookbook:
-
-    depends 'java-cookbook'
+Built & tested using VMWare and Ubuntu templates. Results may vary elsewhere.
 
 ATTRIBUTES
 ==========
@@ -45,45 +31,13 @@ USAGE
 
 Add the default recipe to any host you only want hadoop libs and config on.
 
-Add any other if you want a node to have a specific function.
+Add any other if you want a node to have a specific function (e.g. master or slave)
 
-TODO
-====
-
-* Find out what chef best practices I am badly breaking and address them.
-
-* Make the config template/attribute setup more modular.
-
-* Thoroughly clean up the mysql metastore recipe.
-
-* Make multiple mysql metastore slaves replicating down stream from the primary
-  to create redundancy.
-
-* Clean up the dfs.name.dir/dfs.data.dir/mapred.local.dir enumeration code.
-
-* Have NameNode automatically mount NFS shares from other nodes and add them 
-  to dfs.name.dir
-
-* Have the NameNode safely format if this is a first time deploy and ignore otherwise.
-
-* Deploy NameNode backup scripts.
-
-* Deploy Hive metastore backup scripts.
-
-* Balancer setup.
-
-* Oozie recipe.
-
-* Pig recipe.
-
-* Hue recipe.
-
-* Add array to populate dfs.hosts.exclude file.
 
 LICENSE & AUTHOR
 ================
 
-Author: Nathan Milford <nathan@outbrain.com>
+Original Author: Nathan Milford <nathan@outbrain.com>
 
 Copyright: &copy; 2011, Outbrain, Inc.
 
