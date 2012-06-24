@@ -1,4 +1,4 @@
-# Copyright 2011, Outbrain, Inc.
+# Copyright 2012, Mike Deats and Brandon Sutherlin
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,4 +13,4 @@
 # limitations under the License.
 
 # Set the slave nodes
-default[:Hadoop][:Slaves] = "hadoop-master", "hadoop-slave1", "hadoop-slave2"
+default[:Hadoop][:Slaves] = ""
