@@ -1,5 +1,8 @@
 #!/bin/bash
-# Install Chef
+
+# Install Chef onto an Debian based system (tested on Ubuntu 12.04)
+# This does not need to be run if using the pre-built Ubuntu templates supplied
+# with this repository.
 
 function installChefCore() {
     echo "Installing Opscode repository..."
@@ -27,7 +30,11 @@ function installChefClient() {
 	echo "Updating time..."
 	ntpdate 0.pool.ntp.org
 	echo "Copying validation.pem from Chef server..."
-	scp hduser@hadoop-master:/etc/chef/validation.pem /etc/chef/validation.pem
+	echo "Enter the name or IP of the Chef server:"
+	read chefServer
+	echo "Enter the Chef server username:"
+	read userName
+	scp $userName@$chefServer:/etc/chef/validation.pem /etc/chef/validation.pem
 }
 
 type=client
