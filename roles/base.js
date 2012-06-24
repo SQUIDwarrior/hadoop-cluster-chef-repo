@@ -10,8 +10,9 @@
         "default_version": "1.9.1"
       }
     },
-    "chef_client" => {
-    	"init_style" => "init"
+    "chef_client": {
+    	"init_style": "init",
+		"server_url": "http://hadoop-master:4000"
   	}
   },
   "chef_type": "role",
