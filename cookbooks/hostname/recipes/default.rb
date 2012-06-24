@@ -59,7 +59,10 @@ if fqdn
     changed = true
   end
 
-  ohai "reload" if changed
+  if changed
+  	# Reboot the node if the hostname has changed.
+	execute "reboot" 
+  end
 else
   log "Please set the set_fqdn attribute to desired hostname" do
     level :warn

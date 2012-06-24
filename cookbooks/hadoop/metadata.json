@@ -1,16 +1,17 @@
 {
   "name": "hadoop",
-  "description": "Installs/Configures hadoop",
+  "description": "Installs/Configures a dynamic hadoop cluster",
   "long_description": "Hadoop Cookbook\n===============\n\nBuilds a working Hadoop cluster from bare metal.\n\nThis is my first Chef recipe and on top of that it is a first pass.  \n\nI hope it is helpful and please improve where you see fit.\n\nI tried to put all of the config file knobs I adjust on the cluster in the attributes so I could change them per node.\n\nI have some really ugly code to build disks and enumerate target directories for `dfs.name.dir`, `dfs.data.dir` and `mapred.local.dir`.\n\nFor how I am building disks, see: `files/default/buildHadoopDisks.sh`\n\nRequirements\n============\n\nBuilt & tested for a CentOS 5.5 environment.  Results may vary elsewhere.\n\nThis cookbook assumed that java has already been installed. We use our own proprietary cookbook for that. \n\nConsider adding a line to the `metadata.rb` for this cookbook:\n\n    depends 'java-cookbook'\n\nATTRIBUTES\n==========\n\nSee the attributes directory.  All of the basic settings you might use to tweak your hadoop cluster are avaliable there.\n\nTo start you'll want to adjust\n\n* attributes/core-site.rb: default[:Hadoop][:Core][:fsDefaultName]\n\n* attributes/hadoop-env.rb default[:Hadoop][:Env][:HADOOP_HEAPSIZE]\n\n* attributes/hdfs-site.rb default[:Hadoop][:HDFS][:dfsSecondaryHttpAddress]\n\n* attributes/mapred-site.rb default[:Hadoop][:Mapred][:mapredJobTracker]\n\n\nUSAGE\n=====\n\nAdd the default recipe to any host you only want hadoop libs and config on.\n\nAdd any other if you want a node to have a specific function.\n\nTODO\n====\n\n* Find out what chef best practices I am badly breaking and address them.\n\n* Make the config template/attribute setup more modular.\n\n* Thoroughly clean up the mysql metastore recipe.\n\n* Make multiple mysql metastore slaves replicating down stream from the primary\n  to create redundancy.\n\n* Clean up the dfs.name.dir/dfs.data.dir/mapred.local.dir enumeration code.\n\n* Have NameNode automatically mount NFS shares from other nodes and add them \n  to dfs.name.dir\n\n* Have the NameNode safely format if this is a first time deploy and ignore otherwise.\n\n* Deploy NameNode backup scripts.\n\n* Deploy Hive metastore backup scripts.\n\n* Balancer setup.\n\n* Oozie recipe.\n\n* Pig recipe.\n\n* Hue recipe.\n\n* Add array to populate dfs.hosts.exclude file.\n\nLICENSE & AUTHOR\n================\n\nAuthor: Nathan Milford <nathan@outbrain.com>\n\nCopyright: &copy; 2011, Outbrain, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n<http://www.apache.org/licenses/LICENSE-2.0>\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n",
-  "maintainer": "Outbrain, Inc.",
-  "maintainer_email": "nathan@outbrain.com",
+  "maintainer": "Michael Deats and Brandon Sutherlin",
+  "maintainer_email": "mike.deats@sv.cmu.edu",
   "license": "All rights reserved",
   "platforms": {
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0"
   },
   "dependencies": {
     "apt": ">= 0.0.0",
-    "java": ">= 0.0.0",
-    "ntp": ">= 0.0.0"
+    "java": ">= 0.0.0"
   },
   "recommendations": {
   },
