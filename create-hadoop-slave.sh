@@ -2,18 +2,12 @@
 
 # Create a new hadoop slave node
 
-function cloneNode() {	
-	echo "Clone not yet implemented";
-}
-
 function createHostname() {
 	echo hadoop-slave-`date "+%Y%m%d%H%M%S"`
 }
 
 function createNewSlaveNode() {
-	# Create new new hostname
-	local newHostname=`createHostname`
-	
+	local newHostname=$1	
 	echo "Creating new slave node $newHostname..."
 	
 	# Create the new node in chef
@@ -26,11 +20,16 @@ function createNewSlaveNode() {
 	echo ",\"$newHostname\"" >> cookbooks/hadoop/attributes/slaves.rb
 	echo "Uploading the file to the server..."
 	knife cookbook upload hadoop
-	
-	# Clone the node
-	cloneNode $newHostname
 }
 
-createNewSlaveNode 
+newNode=""
+
+if [ -n "$1" ]; then
+	newNode=$1
+else
+	newNode=`createHostname`
+fi
+
+createNewSlaveNode $newNode
 
 
