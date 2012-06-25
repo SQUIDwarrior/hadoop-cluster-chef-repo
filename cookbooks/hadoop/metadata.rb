@@ -3,7 +3,7 @@ maintainer_email "mike.deats@sv.cmu.edu"
 license          "All rights reserved"
 description      "Installs/Configures a dynamic hadoop cluster"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.1.1"
+version          "0.1.2"
 supports 		 "debian"
 supports 		 "ubuntu"
 recipe           "hadoop::default", "Installs hadoop base libraries and conguration."

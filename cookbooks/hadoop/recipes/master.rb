@@ -44,7 +44,7 @@ if File.exist?("/data/b")
 elsif File.exist?("/data/a")
    node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name" ]
 else
-   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/a/dfs/name" ]
+   node.set['Hadoop']['HDFS']['dfsNameDir'] = [ "/data/b/dfs/name" ]
 end
 
 
@@ -56,7 +56,7 @@ node[:Hadoop][:HDFS][:dfsNameDir].each do |nameDir|
     owner "hdfs"
     group "hadoop"
     mode "0755"
-    recursive false
+    recursive true
     action :create
   end
 end
@@ -73,17 +73,6 @@ if !File.exist?("/etc/hadoop/conf/formated")
     group "hadoop"
     mode "0755"
     action :create_if_missing
-  end
-end
-
-# Create the mapred directory structure
-node[:Hadoop][:Mapred][:mapredLocalDir].each do |localDir|
-  directory localDir do
-    owner "mapred"
-    group "hadoop"
-    mode "0755"
-    recursive true
-    action :create
   end
 end
 

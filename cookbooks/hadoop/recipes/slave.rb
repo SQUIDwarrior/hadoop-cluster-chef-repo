@@ -47,7 +47,7 @@ elsif File.exist?("/data/a")
    node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local" ]
 else
    node.set['Hadoop']['HDFS']['dfsDataDir'] = [ "/data/a/dfs/data" ]
-   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/a/mapred/local" ]
+   node.set['Hadoop']['Mapred']['mapredLocalDir'] = [ "/data/b/mapred/local" ]
 end
 
 node[:Hadoop][:HDFS][:dfsDataDir].each do |dataDir|
